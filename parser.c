@@ -1,13 +1,13 @@
 #include "shell.h"
 
 /**
- * is_cmd - determines whether a file is an executable command or not
+ * read_cmd - determines whether a file is an executable command or not
  * @info: the info struct
  * @path: path to the file
  *
  * Return: 1 if true, 0 otherwise
  */
-int is_cmd(info_t *info, char *path)
+int read_cmd(info_t *info, char *path)
 {
 	struct stat st;
 
@@ -23,14 +23,14 @@ int is_cmd(info_t *info, char *path)
 }
 
 /**
- * dup_chars - duplicates characters
+ * copy_chars - makes copy of characters
  * @pathstr: the PATH string
  * @start: starting index
  * @stop: stopping index
  *
  * Return: pointer to new buffer
  */
-char *dup_chars(char *pathstr, int start, int stop)
+char *copy_chars(char *pathstr, int start, int stop)
 {
 	static char buf[1024];
 	int i = 0, k = 0;

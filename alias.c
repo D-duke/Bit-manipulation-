@@ -3,7 +3,7 @@
 /**
  * unset_alias - sets alias to string
  * @info: parameter struct
- * @str: the string alias
+ * @str: the alias string
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -13,7 +13,7 @@ int unset_alias(info_t *info, char *str)
 	char *p, c;
 	int ret;
 
-	p = _strchr(str, '=');
+	p = strchr(str, '=');
 	if (!p)
 		return (1);
 	c = *p;
@@ -27,7 +27,7 @@ int unset_alias(info_t *info, char *str)
 /**
  * set_alias - sets alias to string
  * @info: parameter struct
- * @str: the string alias
+ * @str: the alias string
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -36,7 +36,7 @@ int set_alias(info_t *info, char *str)
 {
 	char *p;
 
-	p = _strchr(str, '=');
+	p = strchr(str, '=');
 	if (!p)
 		return (1);
 	if (!*++p)
@@ -59,7 +59,7 @@ int print_alias(list_t *node)
 
 	if (node)
 	{
-		p = _strchr(node->str, '=');
+		p = strchr(node->str, '=');
 		for (a = node->str; a <= p; a++)
 			_putchar(*a);
 		_putchar('\'');
@@ -95,7 +95,7 @@ int _myalias(info_t *info)
 	}
 	for (i = 1; info->argv[i]; i++)
 	{
-		p = _strchr(info->argv[i], '=');
+		p = strchr(info->argv[i], '=');
 		if (p)
 			set_alias(info, info->argv[i]);
 		else

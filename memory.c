@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * bfree - frees a pointer and NULLs the address
+ * free_pointer - frees a pointer and NULLs the address
  * @ptr: address of the pointer to free
  *
  * Return: 1 if freed, otherwise 0.
  */
-int bfree(void **ptr)
+int free_pointer(void **ptr)
 {
 	if (ptr && *ptr)
 	{
@@ -34,10 +34,10 @@ char *_memset(char *s, char b, unsigned int n)
 }
 
 /**
- * ffree - frees a string of strings
+ * free_string - frees a string of strings
  * @pp: string of strings
  */
-void ffree(char **pp)
+void free_string(char **pp)
 {
 	char **a = pp;
 

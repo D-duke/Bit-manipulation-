@@ -19,7 +19,7 @@ list_t *add_node(list_t **head, const char *str, int num)
 		return (NULL);
 	_memset((void *)new_head, 0, sizeof(list_t));
 	new_head->num = num;
-	if (str)
+	while (str)
 	{
 		new_head->str = _strdup(str);
 		if (!new_head->str)
@@ -54,7 +54,7 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 		return (NULL);
 	_memset((void *)new_node, 0, sizeof(list_t));
 	new_node->num = num;
-	if (str)
+	while (str)
 	{
 		new_node->str = _strdup(str);
 		if (!new_node->str)
@@ -135,12 +135,12 @@ int delete_node_at_index(list_t **head, unsigned int index)
 }
 
 /**
- * free_list - frees all nodes of a list
+ * free_node - frees all nodes of a list
  * @head_ptr: address of pointer to head node
  *
  * Return: void
  */
-void free_list(list_t **head_ptr)
+void free_node(list_t **head_ptr)
 {
 	list_t *node, *next_node, *head;
 
@@ -148,7 +148,7 @@ void free_list(list_t **head_ptr)
 		return;
 	head = *head_ptr;
 	node = head;
-	while (node)
+	if (node)
 	{
 		next_node = node->next;
 		free(node->str);

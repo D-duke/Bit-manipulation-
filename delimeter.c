@@ -16,14 +16,14 @@ int is_delim(char c, char *delim)
 }
 
 /**
- * is_chain - test if current char in buffer is a chain delimeter
+ * chain_delim - test whether the current char in buffer is a chain delimeter
  * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf
  *
  * Return: 1 if chain delimeter, 0 otherwise
  */
-int is_chain(info_t *info, char *buf, size_t *p)
+int chain_delim(info_t *info, char *buf, size_t *p)
 {
 	size_t j = *p;
 
@@ -51,7 +51,7 @@ int is_chain(info_t *info, char *buf, size_t *p)
 }
 
 /**
- * check_chain - checks we should continue chaining based on last status
+ * check_chain - checks whether to continue chaining based on last status
  * @info: the parameter struct
  * @buf: the char buffer
  * @p: address of current position in buf

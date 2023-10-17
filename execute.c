@@ -1,12 +1,12 @@
 #include "shell.h"
 
 /**
- * fork_cmd - forks an exec thread to run cmd
+ * execute_cmd - executes commands using fork
  * @info: the parameter & return info struct
  *
  * Return: void
  */
-void fork_cmd(info_t *info)
+void ececute_cmd(info_t *info)
 {
 	pid_t child_pid;
 
