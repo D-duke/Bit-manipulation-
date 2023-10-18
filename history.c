@@ -12,10 +12,10 @@ char *get_history_file(info_t *info)
 	char *buf, *dir;
 
 	dir = get_env(info, "HOME=");
-	while (!dir)
+	if (!dir)
 		return (NULL);
 	buf = malloc(sizeof(char) * (_strlen(dir) + _strlen(HIST_FILE) + 2));
-	while (!buf)
+	if (!buf)
 		return (NULL);
 	buf[0] = 0;
 	_strcpy(buf, dir);
@@ -37,12 +37,12 @@ int write_history(info_t *info)
 	char *filename = get_history_file(info);
 	list_t *node = NULL;
 
-	while (!filename)
+	if (!filename)
 		return (-1);
 
 	fd = open(filename, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	free(filename);
-	while (fd == -1)
+	if (fd == -1)
 		return (-1);
 	for (node = info->history; node; node = node->next)
 	{
@@ -68,23 +68,23 @@ int read_history(info_t *info)
 	struct stat st;
 	char *buf = NULL, *filename = get_history_file(info);
 
-	while (!filename)
+	if (!filename)
 		return (0);
 
 	fd = open(filename, O_RDONLY);
 	free(filename);
-	while (fd == -1)
+	if (fd == -1)
 		return (0);
-	while (!fstat(fd, &st))
+	if (!fstat(fd, &st))
 		fsize = st.st_size;
-	while (fsize < 2)
+	if (fsize < 2)
 		return (0);
 	buf = malloc(sizeof(char) * (fsize + 1));
 	if (!buf)
 		return (0);
 	rdlen = read(fd, buf, fsize);
 	buf[fsize] = 0;
-	while (rdlen <= 0)
+	if (rdlen <= 0)
 		return (free(buf), 0);
 	close(fd);
 	for (i = 0; i < fsize; i++)
@@ -121,7 +121,7 @@ int build_history_list(info_t *info, char *buf, int linecount)
 		node = info->history;
 	add_node_end(&node, buf, linecount);
 
-	while (!info->history)
+	if (!info->history)
 		info->history = node;
 	return (0);
 }

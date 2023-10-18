@@ -46,12 +46,12 @@ char *get_env(info_t *info, const char *name)
 
 int myset_env(info_t *info)
 {
-	while (info->argc != 3)
+	if (info->argc != 3)
 	{
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	while (set_env(info, info->argv[1], info->argv[2]))
+	if (set_env(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }

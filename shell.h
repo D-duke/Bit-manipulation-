@@ -109,18 +109,16 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
-/* for_shloop.c */
+/* for_execute.c */
 int hsh(info_t *, char **);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
+void execute_cmd(info_t *);
 
 /* for_parser.c */
 int read_cmd(info_t *, char *);
 char *copy_chars(char *, int, int);
 char *find_path(info_t *, char *, char *);
-
-/* for_execute.c */
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void execute_cmd(info_t *);
 
 /* loophsh.c */
 int loophsh(char **);

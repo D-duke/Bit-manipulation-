@@ -75,7 +75,7 @@ int print_d(int input, int fd)
 	current = _abs_;
 	for (i = 1000000000; i > 1; i /= 10)
 	{
-		while (_abs_ / i)
+		if (_abs_ / i)
 		{
 			__putchar('0' + current / i);
 			count++;
