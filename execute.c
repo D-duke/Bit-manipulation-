@@ -1,44 +1,6 @@
 #include "shell.h"
 
 /**
- * execute_cmd - executes commands using fork
- * @info: the parameter & return info struct
- *
- * Return: void
- */
-void ececute_cmd(info_t *info)
-{
-	pid_t child_pid;
-
-	child_pid = fork();
-	if (child_pid == -1)
-	{
-		perror("Error:");
-		return;
-	}
-	if (child_pid == 0)
-	{
-		if (execve(info->path, info->argv, get_environ(info)) == -1)
-		{
-			free_info(info, 1);
-			if (errno == EACCES)
-				exit(126);
-			exit(1);
-		}
-	}
-	else
-	{
-		wait(&(info->status));
-		if (WIFEXITED(info->status))
-		{
-			info->status = WEXITSTATUS(info->status);
-			if (info->status == 126)
-				print_error(info, "Permission denied\n");
-		}
-	}
-}
-
-/**
  * find_builtin - finds a builtin command
  * @info: the parameter & return info struct
  *
@@ -52,12 +14,12 @@ int find_builtin(info_t *info)
 	int i, built_in_ret = -1;
 	builtin_table builtintbl[] = {
 		{"exit", _myexit},
-		{"env", _myenv},
-		{"help", _myhelp},
-		{"history", _myhistory},
-		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
-		{"cd", _mycd},
+		{"env", my_env},
+		{"help", my_help},
+		{"history", my_history},
+		{"setenv", myset_env},
+		{"unsetenv", myunset_env},
+		{"cd", my_cd},
 		{"alias", _myalias},
 		{NULL, NULL}
 	};
@@ -95,22 +57,59 @@ void find_cmd(info_t *info)
 	if (!k)
 		return;
 
-	path = find_path(info, _getenv(info, "PATH="), info->argv[0]);
+	path = find_path(info, get_env(info, "PATH="), info->argv[0]);
 	if (path)
 	{
 		info->path = path;
-		fork_cmd(info);
+		execute_cmd(info);
 	}
 	else
 	{
-		if ((interactive(info) || _getenv(info, "PATH=")
-			|| info->argv[0][0] == '/') && is_cmd(info, info->argv[0]))
-			fork_cmd(info);
+		if ((interactive_shell(info) || get_env(info, "PATH=")
+			|| info->argv[0][0] == '/') && read_cmd(info, info->argv[0]))
+			execute_cmd(info);
 		else if (*(info->arg) != '\n')
 		{
-			info->status = 127;
+			info->status = 130;
 			print_error(info, "not found\n");
 		}
 	}
 }
 
+/**
+ * execute_cmd - forks a an exec thread to run cmd
+ * @info: the parameter & return info struct
+ *
+ * Return: void
+ */
+void execute_cmd(info_t *info)
+{
+	pid_t child_pid;
+
+	child_pid = fork();
+	if (child_pid == -1)
+	{
+		perror("Error:");
+		return;
+	}
+	if (child_pid == 0)
+	{
+		if (execve(info->path, info->argv, get_environ(info)) == -1)
+		{
+			free_info(info, 1);
+			if (errno == EACCES)
+				exit(126);
+			exit(1);
+		}
+	}
+	else
+	{
+		wait(&(info->status));
+		if (WIFEXITED(info->status))
+		{
+			info->status = WEXITSTATUS(info->status);
+			if (info->status == 126)
+				print_error(info, "Permission denied\n");
+		}
+	}
+}

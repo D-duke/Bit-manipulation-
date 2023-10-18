@@ -37,33 +37,33 @@ char *get_env(info_t *info, const char *name)
 }
 
 /**
- * set_env - Initialize a new environment variable,
+ * myset_env - Initialize a new environment variable,
  *             or modify an existing one
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
 
-int set_env(info_t *info)
+int myset_env(info_t *info)
 {
 	while (info->argc != 3)
 	{
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	while (_setenv(info, info->argv[1], info->argv[2]))
+	while (set_env(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }
 
 /**
- * unset_env - Remove an environment variable
+ * myunset_env - Remove an environment variable
  * @info: Structure containing potential arguments. Used to maintain
  *        constant function prototype.
  *  Return: Always 0
  */
 
-int unset_env(info_t *info)
+int myunset_env(info_t *info)
 {
 	int i;
 
@@ -73,7 +73,7 @@ int unset_env(info_t *info)
 		return (1);
 	}
 	for (i = 1; i <= info->argc; i++)
-		_unsetenv(info, info->argv[i]);
+		unset_env(info, info->argv[i]);
 
 	return (0);
 }

@@ -111,8 +111,6 @@ typedef struct builtin
 
 /* for_shloop.c */
 int hsh(info_t *, char **);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
 
 /* for_parser.c */
 int read_cmd(info_t *, char *);
@@ -120,6 +118,8 @@ char *copy_chars(char *, int, int);
 char *find_path(info_t *, char *, char *);
 
 /* for_execute.c */
+int find_builtin(info_t *);
+void find_cmd(info_t *);
 void execute_cmd(info_t *);
 
 /* loophsh.c */
@@ -127,7 +127,7 @@ int loophsh(char **);
 
 /* for_delimeter */
 int is_delim(char, char *);
-int chain_delimeter(info_t *, char *, size_t *);
+int chain_delim(info_t *, char *, size_t *);
 void check_chain(info_t *, char *, size_t *, size_t, size_t);
 
 /* for_errors.c */
@@ -149,6 +149,7 @@ void _puts(char *);
 int _putchar(char);
 
 /* for_exits.c */
+int _myexit(info_t *);
 char *_strncpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
@@ -179,7 +180,7 @@ void replace_comments(char *);
 /* for_builtin.c */
 int _myexit(info_t *);
 int my_cd(info_t *);
-int my_change(info_t *);
+int my_help(info_t *);
 
 /* for_alias.c */
 int unset_alias(info_t *info, char *str);
@@ -192,7 +193,7 @@ int my_history(info_t *);
 
 /*for_getline.c */
 ssize_t get_input(info_t *);
-int getl_ine(info_t *, char **, size_t *);
+int get_line(info_t *, char **, size_t *);
 void sigintHandler(int);
 
 /* for_getinfo.c */
@@ -203,8 +204,8 @@ void free_info(info_t *, int);
 /* for_environ.c */
 int my_env(info_t *);
 char *get_env(info_t *, const char *);
-int set_env(info_t *);
-int unset_env(info_t *);
+int myset_env(info_t *);
+int myunset_env(info_t *);
 int populate_envlist(info_t *);
 
 /* for_getenv.c */
@@ -233,9 +234,9 @@ size_t print_list(const list_t *);
 list_t *node_prefix(list_t *, char *, char);
 ssize_t node_index(list_t *, list_t *);
 
-/* for_variables.c */
-int replace_alias(info_t *);
-int replace_vars(info_t *);
+/* toem_variables.c */
+int replace_alias(info_t *info);
+int replace_vars(info_t *info);
 int replace_string(char **, char *);
 int _isalpha(int);
 

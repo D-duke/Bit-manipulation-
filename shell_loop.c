@@ -15,7 +15,7 @@ int hsh(info_t *info, char **av)
 	while (r != -1 && builtin_ret != -2)
 	{
 		clear_info(info);
-		if (interactive(info))
+		if (interactive_shell(info))
 			_puts("$ ");
 		_eputchar(BUF_FLUSH);
 		r = get_input(info);
@@ -26,13 +26,13 @@ int hsh(info_t *info, char **av)
 			if (builtin_ret == -1)
 				find_cmd(info);
 		}
-		else if (interactive(info))
+		else if (interactive_shell(info))
 			_putchar('\n');
 		free_info(info, 0);
 	}
 	write_history(info);
 	free_info(info, 1);
-	if (!interactive(info) && info->status)
+	if (!interactive_shell(info) && info->status)
 		exit(info->status);
 	if (builtin_ret == -2)
 	{
