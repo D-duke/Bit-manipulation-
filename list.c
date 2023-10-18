@@ -19,7 +19,7 @@ list_t *add_node(list_t **head, const char *str, int num)
 		return (NULL);
 	_memset((void *)new_head, 0, sizeof(list_t));
 	new_head->num = num;
-	while (str)
+	if (str)
 	{
 		new_head->str = _strdup(str);
 		if (!new_head->str)
@@ -54,7 +54,7 @@ list_t *add_node_end(list_t **head, const char *str, int num)
 		return (NULL);
 	_memset((void *)new_node, 0, sizeof(list_t));
 	new_node->num = num;
-	while (str)
+	if (str)
 	{
 		new_node->str = _strdup(str);
 		if (!new_node->str)
@@ -148,7 +148,7 @@ void free_node(list_t **head_ptr)
 		return;
 	head = *head_ptr;
 	node = head;
-	if (node)
+	while (node)
 	{
 		next_node = node->next;
 		free(node->str);

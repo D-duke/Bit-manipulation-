@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include<string.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -115,6 +115,9 @@ int find_builtin(info_t *);
 void find_cmd(info_t *);
 void execute_cmd(info_t *);
 
+/* for_displayprompt.c */
+int display_prompt(info_t *info, char **av);
+
 /* for_parser.c */
 int read_cmd(info_t *, char *);
 char *copy_chars(char *, int, int);
@@ -123,31 +126,25 @@ char *find_path(info_t *, char *, char *);
 /* loophsh.c */
 int loophsh(char **);
 
-/* for_delimeter */
-int is_delim(char, char *);
-int chain_delim(info_t *, char *, size_t *);
-void check_chain(info_t *, char *, size_t *, size_t, size_t);
-
-/* for_errors.c */
+/* for_myprints.c */
 void _eputs(char *);
 int _eputchar(char);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
-/* for_string1.c */
+/* for_string.c */
 int _strlen(char *);
 int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
 
-/* for_string.c */
+/* for_strings.c */
 char *_strcpy(char *, char *);
 char *_strdup(const char *);
 void _puts(char *);
 int _putchar(char);
 
 /* for_exits.c */
-int _myexit(info_t *);
 char *_strncpy(char *, char *, int);
 char *_strncat(char *, char *, int);
 char *_strchr(char *, char);
@@ -157,41 +154,38 @@ char **strtow(char *, char *);
 char **strtow2(char *, char);
 
 /* for_realloc.c */
+char *_memset(char *, char, unsigned int);
+void sfree(char **);
 void *my_realloc(void *, unsigned int, unsigned int);
 
 /* for_memory.c */
-int free_pointer(void **);
-char *_memset(char *, char, unsigned int);
-void free_string(char **);
+int pfree(void **);
 
-/* _atoi.c */
+/* for_atoi.c */
+int interactive(info_t *);
+int is_delim(char, char *);
+int _isalpha(int);
 int _atoi(char *);
-int interactive_shell(info_t *);
 
 /* for_errors.c */
 int _erratoi(char *);
 void print_error(info_t *, char *);
 int print_d(int, int);
 char *convert_number(long int, int, int);
-void replace_comments(char *);
+void remove_comments(char *);
 
 /* for_builtin.c */
 int _myexit(info_t *);
-int my_cd(info_t *);
-int my_help(info_t *);
+int _mycd(info_t *);
+int _myhelp(info_t *);
 
 /* for_alias.c */
-int unset_alias(info_t *info, char *str);
-int set_alias(info_t *info, char *str);
-int print_alias(list_t *node);
+int _myhistory(info_t *);
 int _myalias(info_t *);
-
-/* for_histories.c */
-int my_history(info_t *);
 
 /*for_getline.c */
 ssize_t get_input(info_t *);
-int get_line(info_t *, char **, size_t *);
+int _getline(info_t *, char **, size_t *);
 void sigintHandler(int);
 
 /* for_getinfo.c */
@@ -200,16 +194,16 @@ void set_info(info_t *, char **);
 void free_info(info_t *, int);
 
 /* for_environ.c */
-int my_env(info_t *);
 char *get_env(info_t *, const char *);
+int my_env(info_t *);
 int myset_env(info_t *);
 int myunset_env(info_t *);
-int populate_envlist(info_t *);
+int populate_env_list(info_t *);
 
 /* for_getenv.c */
 char **get_environ(info_t *);
-int unset_env(info_t *, char *);
-int set_env(info_t *, char *, char *);
+int _unsetenv(info_t *, char *);
+int _setenv(info_t *, char *, char *);
 
 /* for_history.c */
 char *get_history_file(info_t *info);
@@ -218,25 +212,26 @@ int read_history(info_t *info);
 int build_history_list(info_t *info, char *buf, int linecount);
 int renumber_history(info_t *info);
 
-/* for_list.c */
+/* for_lists.c */
 list_t *add_node(list_t **, const char *, int);
 list_t *add_node_end(list_t **, const char *, int);
 size_t print_list_str(const list_t *);
 int delete_node_at_index(list_t **, unsigned int);
 void free_node(list_t **);
 
-/* for_linkedlist.c */
+/* for_linkedlists.c */
 size_t list_len(const list_t *);
 char **list_to_strings(list_t *);
 size_t print_list(const list_t *);
-list_t *node_prefix(list_t *, char *, char);
-ssize_t node_index(list_t *, list_t *);
+list_t *node_starts_with(list_t *, char *, char);
+ssize_t get_node_index(list_t *, list_t *);
 
-/* toem_variables.c */
-int replace_alias(info_t *info);
-int replace_vars(info_t *info);
-int replace_string(char **, char *);
-int _isalpha(int);
+/* for_variables.c */
+int is_chain(info_t *, char *, size_t *);
+void check_chain(info_t *, char *, size_t *, size_t, size_t);
+int replace_alias(info_t *);
+int sub_vars(info_t *);
+int sub_string(char **, char *);
 
 
 #endif

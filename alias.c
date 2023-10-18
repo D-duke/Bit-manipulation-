@@ -1,9 +1,23 @@
 #include "shell.h"
 
 /**
+ * _myhistory - displays the history list, one command by line, preceded
+ *              with line numbers, starting at 0.
+ * @info: Structure containing potential arguments. Used to maintain
+ *        constant function prototype.
+ *  Return: Always 0
+ */
+
+int _myhistory(info_t *info)
+{
+	print_list(info->history);
+	return (0);
+}
+
+/**
  * unset_alias - sets alias to string
  * @info: parameter struct
- * @str: the alias string
+ * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -19,7 +33,7 @@ int unset_alias(info_t *info, char *str)
 	c = *p;
 	*p = 0;
 	ret = delete_node_at_index(&(info->alias),
-		node_index(info->alias, node_prefix(info->alias, str, -1)));
+		get_node_index(info->alias, node_starts_with(info->alias, str, -1)));
 	*p = c;
 	return (ret);
 }
@@ -27,7 +41,7 @@ int unset_alias(info_t *info, char *str)
 /**
  * set_alias - sets alias to string
  * @info: parameter struct
- * @str: the alias string
+ * @str: the string alias
  *
  * Return: Always 0 on success, 1 on error
  */
@@ -99,7 +113,7 @@ int _myalias(info_t *info)
 		if (p)
 			set_alias(info, info->argv[i]);
 		else
-			print_alias(node_prefix(info->alias, info->argv[i], '='));
+			print_alias(node_starts_with(info->alias, info->argv[i], '='));
 	}
 
 	return (0);

@@ -51,7 +51,7 @@ int myset_env(info_t *info)
 		_eputs("Incorrect number of arguements\n");
 		return (1);
 	}
-	if (set_env(info, info->argv[1], info->argv[2]))
+	if (_setenv(info, info->argv[1], info->argv[2]))
 		return (0);
 	return (1);
 }
@@ -73,19 +73,19 @@ int myunset_env(info_t *info)
 		return (1);
 	}
 	for (i = 1; i <= info->argc; i++)
-		unset_env(info, info->argv[i]);
+		_unsetenv(info, info->argv[i]);
 
 	return (0);
 }
 
 /**
- * populate_envlist - populates env linked list
+ * populate_env_list - populates env linked list
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  * Return: Always 0
  */
 
-int populate_envlist(info_t *info)
+int populate_env_list(info_t *info)
 {
 	list_t *node = NULL;
 	size_t i;

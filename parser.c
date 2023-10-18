@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * read_cmd - determines whether a file is an executable command or not
+ * read_cmd - determines if a file is executable
  * @info: the info struct
  * @path: path to the file
  *
@@ -23,7 +23,7 @@ int read_cmd(info_t *info, char *path)
 }
 
 /**
- * copy_chars - makes copy of characters
+ * copy_chars - makes copies of characters
  * @pathstr: the PATH string
  * @start: starting index
  * @stop: stopping index
